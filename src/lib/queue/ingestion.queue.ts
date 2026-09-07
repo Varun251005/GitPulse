@@ -14,10 +14,6 @@ export interface IngestionJobResult {
   fullName: string
   githubId: number
   isNew: boolean
-  contributorsCount?: number
-  commitsCount?: number
-  pullRequestsCount?: number
-  issuesCount?: number
   processedAt: string
   message: string
 }
