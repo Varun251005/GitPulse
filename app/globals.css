@@ -1,0 +1,310 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    letter-spacing: -0.01em;
+  }
+  h1, h2, h3, h4, h5, h6, button, input, textarea, select, p, span, a {
+    font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+}
+
+/* Custom Grid Background Pattern */
+.grid-background {
+  width: 100%;
+  min-height: 100%;
+  --color: rgba(114, 114, 114, 0.3);
+  background-color: #191a1a;
+  background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent),
+      linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent);
+  background-size: 55px 55px;
+}
+
+/* Neo-brutalist GitHub Login Button */
+.neo-github-btn {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.75rem 1rem 0.75rem 1.25rem;
+  background-color: #ffe600;
+  color: #000000;
+  cursor: pointer;
+  box-shadow: 4px 6px 0px #000000;
+  border: 4px solid #000000;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  transition: box-shadow 250ms, transform 250ms, filter 50ms;
+}
+
+.neo-github-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 3px 0px #000000;
+}
+
+.neo-github-btn:active {
+  filter: saturate(0.75);
+}
+
+.neo-github-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #ffb6c1;
+  z-index: -1;
+  transform: translateX(-100%);
+  transition: transform 250ms ease-in-out;
+}
+
+.neo-github-btn:hover::after {
+  transform: translateX(0);
+}
+
+.neo-bg-container {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000000;
+  width: 165px;
+}
+
+.neo-bg-container span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+  min-width: 100%;
+  transform: translateX(-100%);
+  transition: all 250ms ease-in-out;
+}
+
+.neo-github-btn:hover .neo-bg-container > span {
+  transform: translateX(0);
+}
+
+.neo-arrow-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  border: 4px solid #000000;
+  border-radius: 50%;
+  background-color: #ffb6c1;
+  position: relative;
+  overflow: hidden;
+  transition: transform 250ms, background-color 250ms;
+  z-index: 10;
+}
+
+.neo-arrow-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: #ffe600;
+  transform: translateX(-100%);
+  z-index: -1;
+  transition: transform 250ms ease-in-out;
+}
+
+.neo-github-btn:hover .neo-arrow-container::after {
+  transform: translateX(0);
+}
+
+.neo-github-btn:hover .neo-arrow-container {
+  transform: translateX(5px);
+}
+
+.neo-github-btn:active .neo-arrow-container {
+  transform: translateX(8px);
+}
+
+.neo-arrow-container svg {
+  vertical-align: middle;
+}
+
+/* Brutal URL Input & Action Button Theme */
+@keyframes brutal-shake {
+  0% { transform: translateX(0); }
+  5% { transform: translateX(-6px); }
+  10% { transform: translateX(6px); }
+  15% { transform: translateX(-6px); }
+  20% { transform: translateX(6px); }
+  25% { transform: translateX(-5px); }
+  30% { transform: translateX(5px); }
+  35% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  45% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  55% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  65% { transform: translateX(-3px); }
+  70% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+  85% { transform: translateX(-2px); }
+  90% { transform: translateX(2px); }
+  95% { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes brutal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.brutal-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.brutal-input {
+  width: 100%;
+  height: 60px;
+  padding: 12px 18px;
+  font-size: 17px;
+  font-family: "Courier New", Courier, monospace, ui-monospace;
+  color: #000000;
+  background-color: #ffffff;
+  border: 4px solid #000000;
+  border-radius: 0;
+  outline: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 8px 8px 0px #000000;
+}
+
+.brutal-input::placeholder {
+  color: #737373;
+  font-family: "Courier New", Courier, monospace, ui-monospace;
+}
+
+.brutal-input:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0px #000000;
+}
+
+.brutal-input:focus {
+  background-color: #010101;
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 10px 10px 0px #ffe600;
+  animation: brutal-shake 0.55s ease-in-out;
+}
+
+.brutal-input:focus::placeholder {
+  color: #a3a3a3;
+}
+
+.brutal-input:not(:placeholder-shown) {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.brutal-btn {
+  height: 60px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 800;
+  font-family: "Courier New", Courier, monospace, ui-monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #000000;
+  background-color: #ffe600;
+  border: 4px solid #000000;
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow: 8px 8px 0px #000000;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.brutal-btn:hover:not(:disabled) {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0px #000000;
+  background-color: #ffb6c1;
+}
+
+.brutal-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.brutal-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

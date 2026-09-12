@@ -2,14 +2,16 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Input } from "@/frontend/components/ui/input"
 import { Button } from "@/frontend/components/ui/button"
 import { Search, Loader2 } from "lucide-react"
+import { GithubIcon } from "@/frontend/components/icons/github-icon"
 import { parseGitHubRepoUrl } from "@/backend/github/url"
+import { signIn } from "next-auth/react"
 
 export function RepositoryInput() {
   const [url, setUrl] = useState("")
   const [error, setError] = useState("")
+  const [errorCode, setErrorCode] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [status, setStatus] = useState("")
   const router = useRouter()
@@ -17,6 +19,7 @@ export function RepositoryInput() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+    setErrorCode("")
     setStatus("")
 
     const trimmed = url.trim()
@@ -61,7 +64,11 @@ export function RepositoryInput() {
 
       if (res.status === 403) {
         const data = await res.json()
-        setError(data.error || "This repository is private. GitPulse can only analyze public repositories.")
+        setError(
+          data.error ||
+            "This repository is private. Sign in with GitHub to analyze repositories you have access to."
+        )
+        setErrorCode(data.code || "")
         setIsLoading(false)
         setStatus("")
         return
@@ -86,34 +93,64 @@ export function RepositoryInput() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto flex flex-col gap-2">
-      <div className="flex w-full items-center space-x-2">
-        <Input
-          type="text"
-          value={url}
-          onChange={(e) => {
-            setUrl(e.target.value)
-            setError("")
-          }}
-          placeholder="e.g., https://github.com/facebook/react"
-          className="flex-1 h-12 text-lg px-4"
-          aria-label="GitHub repository URL"
+    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto flex flex-col gap-3">
+      <div className="flex flex-col sm:flex-row w-full items-stretch gap-3">
+        <div className="brutal-input-container flex-1">
+          <input
+            type="text"
+            value={url}
+            onChange={(e) => {
+              setUrl(e.target.value)
+              setError("")
+              setErrorCode("")
+            }}
+            placeholder="https://github.com/facebook/react"
+            className="brutal-input"
+            aria-label="GitHub repository URL"
+            disabled={isLoading}
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="brutal-btn"
           disabled={isLoading}
-        />
-        <Button type="submit" size="lg" className="h-12 px-8" disabled={isLoading}>
+          aria-label="Analyze repository"
+        >
           {isLoading ? (
-            <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span>Analyzing</span>
+            </>
           ) : (
-            <Search className="h-5 w-5 mr-2" />
+            <>
+              <Search className="h-5 w-5" />
+              <span>Analyze</span>
+            </>
           )}
-          Analyze
-        </Button>
+        </button>
       </div>
+
       {error && (
-        <p className="text-destructive text-sm text-left px-2 mt-1 font-medium">{error}</p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-red-950/80 border-2 border-red-500 rounded text-left mt-1">
+          <p className="text-red-200 text-sm font-mono">{error}</p>
+          {errorCode === "REPO_PRIVATE_LOGIN_REQUIRED" && (
+            <Button
+              type="button"
+              size="sm"
+              variant="default"
+              onClick={() => signIn("github")}
+              className="gap-1.5 shrink-0 self-start sm:self-center font-mono font-bold"
+            >
+              <GithubIcon className="h-4 w-4" />
+              Sign in with GitHub
+            </Button>
+          )}
+        </div>
       )}
+
       {status && !error && (
-        <p className="text-muted-foreground text-sm text-left px-2 mt-1">{status}</p>
+        <p className="text-neutral-400 text-sm font-mono text-left px-2 mt-1">{status}</p>
       )}
     </form>
   )

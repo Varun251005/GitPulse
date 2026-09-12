@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String       @id @default(cuid())
+  name          String?
+  email         String?      @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  repositories  Repo[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Repo {
+  id              String         @id @default(cuid())
+  githubId        Int            @unique
+  name            String
+  owner           String
+  fullName        String
+  description     String?        @db.Text
+  url             String
+  defaultBranch   String         @default("main")
+  language        String?
+  starsCount      Int            @default(0)
+  forksCount      Int            @default(0)
+  openIssuesCount Int            @default(0)
+  isPrivate       Boolean        @default(false)
+  userId          String?
+  user            User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  contributors    Contributor[]
+  commits         Commit[]
+  pullRequests    PullRequest[]
+  issues          Issue[]
+  lastSyncedAt    DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@unique([owner, name])
+  @@index([fullName])
+  @@index([userId])
+}
+
+model Contributor {
+  id           String        @id @default(cuid())
+  githubId     Int           @unique
+  username     String        @unique
+  name         String?
+  avatarUrl    String?
+  repositories Repo[]
+  commits      Commit[]
+  authoredPRs  PullRequest[] @relation("AuthoredPRs")
+  mergedPRs    PullRequest[] @relation("MergedPRs")
+  issues       Issue[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Commit {
+  id            String       @id @default(cuid())
+  sha           String       @unique
+  message       String       @db.Text
+  committedAt   DateTime
+  additions     Int          @default(0)
+  deletions     Int          @default(0)
+  repoId        String
+  repo          Repo         @relation(fields: [repoId], references: [id], onDelete: Cascade)
+  contributorId String?
+  contributor   Contributor? @relation(fields: [contributorId], references: [id], onDelete: SetNull)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([repoId])
+  @@index([contributorId])
+  @@index([committedAt])
+}
+
+model PullRequest {
+  id         String       @id @default(cuid())
+  githubId   BigInt       @unique
+  number     Int
+  title      String
+  body       String?      @db.Text
+  state      String
+  draft      Boolean      @default(false)
+  openedAt   DateTime
+  closedAt   DateTime?
+  mergedAt   DateTime?
+  repoId     String
+  repo       Repo         @relation(fields: [repoId], references: [id], onDelete: Cascade)
+  authorId   String?
+  author     Contributor? @relation("AuthoredPRs", fields: [authorId], references: [id], onDelete: SetNull)
+  mergedById String?
+  mergedBy   Contributor? @relation("MergedPRs", fields: [mergedById], references: [id], onDelete: SetNull)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@unique([repoId, number])
+  @@index([repoId])
+  @@index([authorId])
+  @@index([mergedById])
+  @@index([state])
+}
+
+model Issue {
+  id            String       @id @default(cuid())
+  githubId      BigInt       @unique
+  number        Int
+  title         String
+  body          String?      @db.Text
+  state         String
+  openedAt      DateTime
+  closedAt      DateTime?
+  commentsCount Int          @default(0)
+  repoId        String
+  repo          Repo         @relation(fields: [repoId], references: [id], onDelete: Cascade)
+  authorId      String?
+  author        Contributor? @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@unique([repoId, number])
+  @@index([repoId])
+  @@index([authorId])
+  @@index([state])
+}
+

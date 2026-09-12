@@ -3,13 +3,21 @@
 import { DashboardSection } from "./dashboard-section"
 import { GitPulseIssue } from "@/types/api"
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts"
+import { ArrowRight, CircleDot } from "lucide-react"
+import { Button } from "@/frontend/components/ui/button"
 
 const COLORS = {
   Open: "hsl(var(--chart-2, 160 84% 39%))",
-  Closed: "hsl(var(--chart-4, 280 65% 60%))" // fallback color
+  Closed: "hsl(var(--chart-4, 280 65% 60%))"
 }
 
-export function IssueAnalytics({ issues }: { issues: GitPulseIssue[] }) {
+export function IssueAnalytics({ 
+  issues,
+  onViewAll 
+}: { 
+  issues: GitPulseIssue[]
+  onViewAll?: () => void 
+}) {
   if (!issues || issues.length === 0) {
     return (
       <DashboardSection title="Issues" description="Issue resolution and tracking">
@@ -33,11 +41,28 @@ export function IssueAnalytics({ issues }: { issues: GitPulseIssue[] }) {
 
   const data = [
     { name: "Open", value: open, color: COLORS.Open },
-    { name: "Closed", value: closed, color: "hsl(var(--muted-foreground))" }, // Gray for closed
+    { name: "Closed", value: closed, color: "hsl(var(--muted-foreground))" },
   ].filter(d => d.value > 0)
 
   return (
-    <DashboardSection title="Issues" description="Recent issue state distribution">
+    <DashboardSection 
+      title="Issues" 
+      description="Recent issue state distribution"
+      action={
+        onViewAll && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onViewAll}
+            className="text-xs gap-1 h-8 px-2.5 font-mono text-primary hover:bg-primary/10"
+          >
+            <CircleDot className="h-3.5 w-3.5" />
+            <span>View all {issues.length} issues</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Button>
+        )
+      }
+    >
       <div className="h-64 mt-4 w-full">
         {data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">

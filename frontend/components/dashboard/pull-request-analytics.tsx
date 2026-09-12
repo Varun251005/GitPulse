@@ -3,14 +3,22 @@
 import { DashboardSection } from "./dashboard-section"
 import { GitPulsePullRequest } from "@/types/api"
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts"
+import { ArrowRight, GitPullRequest as PRIcon } from "lucide-react"
+import { Button } from "@/frontend/components/ui/button"
 
 const COLORS = {
-  Open: "hsl(var(--chart-2, 160 84% 39%))",      // green-ish
-  Closed: "hsl(var(--chart-1, 0 84% 60%))",      // red-ish
-  Merged: "hsl(var(--chart-3, 280 65% 60%))"     // purple-ish
+  Open: "hsl(var(--chart-2, 160 84% 39%))",
+  Closed: "hsl(var(--chart-1, 0 84% 60%))",
+  Merged: "hsl(var(--chart-3, 280 65% 60%))"
 }
 
-export function PullRequestAnalytics({ pullRequests }: { pullRequests: GitPulsePullRequest[] }) {
+export function PullRequestAnalytics({ 
+  pullRequests,
+  onViewAll 
+}: { 
+  pullRequests: GitPulsePullRequest[]
+  onViewAll?: () => void 
+}) {
   if (!pullRequests || pullRequests.length === 0) {
     return (
       <DashboardSection title="Pull Requests" description="Pull request merge trends">
@@ -42,7 +50,24 @@ export function PullRequestAnalytics({ pullRequests }: { pullRequests: GitPulseP
   ].filter(d => d.value > 0)
 
   return (
-    <DashboardSection title="Pull Requests" description="Recent PR state distribution">
+    <DashboardSection 
+      title="Pull Requests" 
+      description="Recent PR state distribution"
+      action={
+        onViewAll && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onViewAll}
+            className="text-xs gap-1 h-8 px-2.5 font-mono text-primary hover:bg-primary/10"
+          >
+            <PRIcon className="h-3.5 w-3.5" />
+            <span>View all {pullRequests.length} PRs</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Button>
+        )
+      }
+    >
       <div className="h-64 mt-4 w-full">
         {data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
