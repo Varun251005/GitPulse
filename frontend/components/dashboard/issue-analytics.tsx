@@ -81,7 +81,19 @@ export function IssueAnalytics({
                 ))}
               </Pie>
               <Tooltip 
-                contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--border))" }}
+                contentStyle={{ 
+                  backgroundColor: "#09090b", 
+                  borderColor: "#27272a", 
+                  borderRadius: "8px", 
+                  color: "#ffffff",
+                  fontFamily: "var(--font-geist-mono), monospace",
+                  fontSize: "12px",
+                  boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -4px rgba(0, 0, 0, 0.7)",
+                  padding: "8px 12px",
+                }}
+                itemStyle={{ color: "#e4e4e7", fontWeight: 500 }}
+                labelStyle={{ color: "#ffffff", fontWeight: 700, marginBottom: "4px" }}
+                formatter={(value) => [`${value} issues`, "Count"]}
               />
               <Legend verticalAlign="bottom" height={36} iconType="circle" />
             </PieChart>
