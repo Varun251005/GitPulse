@@ -3,7 +3,7 @@
 import { DashboardSection } from "./dashboard-section"
 import { GitPulseCommit, GitPulseContributor } from "@/types/api"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
-import { ArrowRight, User } from "lucide-react"
+import { User } from "lucide-react"
 
 export function ContributorAnalytics({ 
   contributors, 
@@ -48,7 +48,7 @@ export function ContributorAnalytics({
             <BarChart 
               data={data} 
               layout="vertical" 
-              margin={{ top: 0, right: 10, left: 0, bottom: 0 }}
+              margin={{ top: 0, right: 15, left: 0, bottom: 0 }}
               onClick={(state) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const evt = state as any
@@ -70,15 +70,28 @@ export function ContributorAnalytics({
                 tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))", cursor: "pointer" }}
               />
               <Tooltip 
-                cursor={{ fill: "hsl(var(--muted)/0.5)" }}
-                contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--border))" }}
+                cursor={{ fill: "rgba(255, 255, 255, 0.08)" }}
+                contentStyle={{ 
+                  backgroundColor: "#09090b", 
+                  borderColor: "#27272a", 
+                  borderRadius: "8px", 
+                  color: "#ffffff",
+                  fontFamily: "var(--font-geist-mono), monospace",
+                  fontSize: "12px",
+                  boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -4px rgba(0, 0, 0, 0.7)",
+                  padding: "8px 12px",
+                }}
+                itemStyle={{ color: "#e4e4e7", fontWeight: 500 }}
+                labelStyle={{ color: "#ffffff", fontWeight: 700, marginBottom: "4px" }}
+                formatter={(value) => [`${value} commits`, "Total Commits"]}
+                labelFormatter={(label) => `@${label}`}
               />
               <Bar 
                 dataKey="count" 
                 fill="hsl(var(--primary))" 
                 radius={[0, 4, 4, 0]} 
                 barSize={24} 
-                className="cursor-pointer"
+                className="cursor-pointer hover:opacity-80 transition-opacity"
               />
             </BarChart>
           </ResponsiveContainer>
@@ -108,4 +121,3 @@ export function ContributorAnalytics({
     </DashboardSection>
   )
 }
-
