@@ -37,20 +37,20 @@ const POLL_INTERVAL_MS = 4000
 function LoadingAnalytics() {
   return (
     <DashboardShell>
-      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-6 text-center">
-        <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" />
-        <div className="space-y-2">
-          <h2 className="text-xl font-semibold">Analyzing repository…</h2>
-          <p className="text-muted-foreground max-w-md text-sm">
+      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-5 text-center px-2 font-mono">
+        <Loader2 className="h-8 w-8 sm:h-10 sm:w-10 animate-spin text-muted-foreground" />
+        <div className="space-y-1.5 sm:space-y-2">
+          <h2 className="text-lg sm:text-xl font-semibold">Analyzing repository…</h2>
+          <p className="text-muted-foreground max-w-md text-xs sm:text-sm font-sans">
             Fetching repository metadata, contributors, commits, pull requests, and issues.
             This may take a moment.
           </p>
         </div>
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full max-w-3xl">
+        <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full max-w-3xl">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="border rounded-lg p-6 h-24 bg-card shadow-sm">
-              <Skeleton className="h-4 w-24 mb-3" />
-              <Skeleton className="h-7 w-16" />
+            <div key={i} className="border rounded-xl p-4 sm:p-6 h-20 sm:h-24 bg-card shadow-sm">
+              <Skeleton className="h-3.5 sm:h-4 w-20 sm:w-24 mb-2 sm:mb-3" />
+              <Skeleton className="h-5 sm:h-7 w-12 sm:w-16" />
             </div>
           ))}
         </div>
@@ -73,9 +73,9 @@ function ErrorState({
 
   return (
     <DashboardShell>
-      <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-6 max-w-md mx-auto">
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-5 max-w-md mx-auto px-4 font-mono">
         <div
-          className={`p-4 rounded-full ${
+          className={`p-3.5 sm:p-4 rounded-full ${
             isPrivateLoginRequired
               ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
               : isUnauthorized
@@ -84,37 +84,37 @@ function ErrorState({
           }`}
         >
           {isPrivateLoginRequired ? (
-            <Lock className="h-10 w-10" />
+            <Lock className="h-8 w-8 sm:h-10 sm:w-10" />
           ) : isUnauthorized ? (
-            <ShieldAlert className="h-10 w-10" />
+            <ShieldAlert className="h-8 w-8 sm:h-10 sm:w-10" />
           ) : (
-            <AlertCircle className="h-10 w-10" />
+            <AlertCircle className="h-8 w-8 sm:h-10 sm:w-10" />
           )}
         </div>
 
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold tracking-tight">
+        <div className="space-y-1.5 sm:space-y-2">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
             {isPrivateLoginRequired
               ? "Private Repository"
               : isUnauthorized
               ? "Access Denied"
               : "Repository Not Found"}
           </h2>
-          <p className="text-muted-foreground text-sm">{message}</p>
+          <p className="text-muted-foreground text-xs sm:text-sm font-sans">{message}</p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto">
           {isPrivateLoginRequired ? (
-            <Button onClick={() => signIn("github")} size="default" className="gap-2">
+            <Button onClick={() => signIn("github")} size="default" className="gap-2 text-xs sm:text-sm">
               <GithubIcon className="h-4 w-4" />
               Sign in with GitHub
             </Button>
           ) : (
-            <Button onClick={onRetry} variant="default">
+            <Button onClick={onRetry} variant="default" className="text-xs sm:text-sm">
               Try again
             </Button>
           )}
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild className="text-xs sm:text-sm">
             <Link href="/">Analyze another repository</Link>
           </Button>
         </div>
@@ -258,11 +258,11 @@ export default function RepositoryDashboard({
 
   return (
     <DashboardShell>
-      <div className="space-y-8 animate-in fade-in duration-500 font-mono">
+      <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-500 font-mono">
         <RepositoryHeader repository={data.repository} />
 
-        {/* Tab Navigation Controls */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-neutral-800">
+        {/* Tab Navigation Controls with Mobile Touch-Slide */}
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 border-b border-neutral-800 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
           {tabs.map((tab) => {
             const Icon = tab.icon
             const isActive = activeTab === tab.id
@@ -271,17 +271,17 @@ export default function RepositoryDashboard({
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
                   isActive
                     ? "bg-primary text-primary-foreground shadow-md"
                     : "text-neutral-400 hover:text-white hover:bg-neutral-900 border border-transparent hover:border-neutral-800"
                 }`}
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span>{tab.label}</span>
                 {tab.count !== undefined && (
                   <span
-                    className={`px-1.5 py-0.5 rounded-full text-[10px] ${
+                    className={`px-1.5 py-0.2 rounded-full text-[10px] ${
                       isActive
                         ? "bg-black/20 text-primary-foreground"
                         : "bg-neutral-800 text-neutral-400"
@@ -297,11 +297,11 @@ export default function RepositoryDashboard({
 
         {/* TAB 1: OVERVIEW */}
         {activeTab === "overview" && (
-          <div className="space-y-8 animate-in fade-in duration-300">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium tracking-tight text-white">Repository Overview</h3>
-                <span className="text-xs text-neutral-400">Click any card to view detailed breakdown</span>
+          <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-300">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <h3 className="text-base sm:text-lg font-medium tracking-tight text-white">Repository Overview</h3>
+                <span className="text-[11px] sm:text-xs text-neutral-400">Click any card to view detailed breakdown</span>
               </div>
               <SummaryCards
                 summary={data.summary}
@@ -310,7 +310,7 @@ export default function RepositoryDashboard({
               />
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2">
               <ContributorAnalytics
                 contributors={data.contributors}
                 commits={data.commits}
@@ -334,14 +334,14 @@ export default function RepositoryDashboard({
 
         {/* TAB 2: COMMITS LIST VIEW */}
         {activeTab === "commits" && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <GitCommit className="h-5 w-5 text-emerald-400" />
+                <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                  <GitCommit className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-400" />
                   <span>Commit History</span>
                 </h3>
-                <p className="text-xs text-neutral-400">
+                <p className="text-xs text-neutral-400 font-sans">
                   Search commit messages, copy SHAs, and filter by user/contributor.
                 </p>
               </div>
@@ -360,14 +360,14 @@ export default function RepositoryDashboard({
 
         {/* TAB 3: PULL REQUESTS LIST VIEW */}
         {activeTab === "pullRequests" && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <GitPullRequest className="h-5 w-5 text-purple-400" />
+                <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                  <GitPullRequest className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
                   <span>Pull Requests</span>
                 </h3>
-                <p className="text-xs text-neutral-400">
+                <p className="text-xs text-neutral-400 font-sans">
                   View merged, open, closed, and draft pull requests with descriptions and target branches.
                 </p>
               </div>
@@ -384,14 +384,14 @@ export default function RepositoryDashboard({
 
         {/* TAB 4: ISSUES LIST VIEW */}
         {activeTab === "issues" && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <CircleDot className="h-5 w-5 text-amber-400" />
+                <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                  <CircleDot className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400" />
                   <span>Issues & Bugs</span>
                 </h3>
-                <p className="text-xs text-neutral-400">
+                <p className="text-xs text-neutral-400 font-sans">
                   Track open and resolved issues, comments count, and discussions.
                 </p>
               </div>
@@ -407,14 +407,14 @@ export default function RepositoryDashboard({
 
         {/* TAB 5: CONTRIBUTORS LIST VIEW */}
         {activeTab === "contributors" && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <Users className="h-5 w-5 text-blue-400" />
+                <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                  <Users className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
                   <span>Contributors</span>
                 </h3>
-                <p className="text-xs text-neutral-400">
+                <p className="text-xs text-neutral-400 font-sans">
                   Click &ldquo;View Commits&rdquo; on any contributor to inspect their specific commit history.
                 </p>
               </div>
@@ -432,4 +432,3 @@ export default function RepositoryDashboard({
     </DashboardShell>
   )
 }
-

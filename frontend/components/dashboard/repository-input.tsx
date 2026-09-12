@@ -93,9 +93,9 @@ export function RepositoryInput() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto flex flex-col gap-3">
-      <div className="flex flex-col sm:flex-row w-full items-stretch gap-3">
-        <div className="brutal-input-container flex-1">
+    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto flex flex-col gap-2.5 sm:gap-3 box-border">
+      <div className="flex flex-col sm:flex-row w-full items-stretch gap-2.5 sm:gap-3">
+        <div className="brutal-input-container flex-1 min-w-0">
           <input
             type="text"
             value={url}
@@ -113,18 +113,18 @@ export function RepositoryInput() {
 
         <button
           type="submit"
-          className="brutal-btn"
+          className="brutal-btn w-full sm:w-auto"
           disabled={isLoading}
           aria-label="Analyze repository"
         >
           {isLoading ? (
             <>
-              <Loader2 className="h-5 w-5 animate-spin" />
+              <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
               <span>Analyzing</span>
             </>
           ) : (
             <>
-              <Search className="h-5 w-5" />
+              <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               <span>Analyze</span>
             </>
           )}
@@ -133,16 +133,16 @@ export function RepositoryInput() {
 
       {error && (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-red-950/80 border-2 border-red-500 rounded text-left mt-1">
-          <p className="text-red-200 text-sm font-mono">{error}</p>
+          <p className="text-red-200 text-xs sm:text-sm font-mono break-words">{error}</p>
           {errorCode === "REPO_PRIVATE_LOGIN_REQUIRED" && (
             <Button
               type="button"
               size="sm"
               variant="default"
               onClick={() => signIn("github")}
-              className="gap-1.5 shrink-0 self-start sm:self-center font-mono font-bold"
+              className="gap-1.5 shrink-0 self-start sm:self-center font-mono font-bold text-xs"
             >
-              <GithubIcon className="h-4 w-4" />
+              <GithubIcon className="h-3.5 w-3.5" />
               Sign in with GitHub
             </Button>
           )}
@@ -150,7 +150,7 @@ export function RepositoryInput() {
       )}
 
       {status && !error && (
-        <p className="text-neutral-400 text-sm font-mono text-left px-2 mt-1">{status}</p>
+        <p className="text-neutral-400 text-xs sm:text-sm font-mono text-left px-1 sm:px-2 mt-1 animate-pulse">{status}</p>
       )}
     </form>
   )

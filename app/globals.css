@@ -68,10 +68,20 @@
     @apply bg-background text-foreground;
     font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     letter-spacing: -0.01em;
+    overflow-x: hidden;
   }
   h1, h2, h3, h4, h5, h6, button, input, textarea, select, p, span, a {
     font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
+}
+
+/* Hide scrollbar for clean horizontal tab sliding on mobile */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 /* Custom Grid Background Pattern */
@@ -90,18 +100,29 @@
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1.25rem;
-  padding: 0.75rem 1rem 0.75rem 1.25rem;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem 0.6rem 1rem;
   background-color: #ffe600;
   color: #000000;
   cursor: pointer;
-  box-shadow: 4px 6px 0px #000000;
-  border: 4px solid #000000;
-  border-radius: 15px;
+  box-shadow: 4px 4px 0px #000000;
+  border: 3px solid #000000;
+  border-radius: 12px;
   position: relative;
   overflow: hidden;
   z-index: 10;
+  max-width: 100%;
   transition: box-shadow 250ms, transform 250ms, filter 50ms;
+}
+
+@media (min-width: 640px) {
+  .neo-github-btn {
+    gap: 1.25rem;
+    padding: 0.75rem 1rem 0.75rem 1.25rem;
+    box-shadow: 4px 6px 0px #000000;
+    border: 4px solid #000000;
+    border-radius: 15px;
+  }
 }
 
 .neo-github-btn:hover {
@@ -133,10 +154,17 @@
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #000000;
-  width: 165px;
+  width: 135px;
+}
+
+@media (min-width: 640px) {
+  .neo-bg-container {
+    font-size: 1.25rem;
+    width: 165px;
+  }
 }
 
 .neo-bg-container span {
@@ -157,14 +185,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.6rem;
-  border: 4px solid #000000;
+  padding: 0.5rem;
+  border: 3px solid #000000;
   border-radius: 50%;
   background-color: #ffb6c1;
   position: relative;
   overflow: hidden;
   transition: transform 250ms, background-color 250ms;
   z-index: 10;
+}
+
+@media (min-width: 640px) {
+  .neo-arrow-container {
+    padding: 0.6rem;
+    border: 4px solid #000000;
+  }
 }
 
 .neo-arrow-container::after {
@@ -197,31 +232,23 @@
 /* Brutal URL Input & Action Button Theme */
 @keyframes brutal-shake {
   0% { transform: translateX(0); }
-  5% { transform: translateX(-6px); }
-  10% { transform: translateX(6px); }
-  15% { transform: translateX(-6px); }
-  20% { transform: translateX(6px); }
-  25% { transform: translateX(-5px); }
-  30% { transform: translateX(5px); }
-  35% { transform: translateX(-5px); }
-  40% { transform: translateX(5px); }
-  45% { transform: translateX(-4px); }
-  50% { transform: translateX(4px); }
-  55% { transform: translateX(-4px); }
-  60% { transform: translateX(4px); }
-  65% { transform: translateX(-3px); }
-  70% { transform: translateX(3px); }
-  75% { transform: translateX(-3px); }
-  80% { transform: translateX(3px); }
-  85% { transform: translateX(-2px); }
-  90% { transform: translateX(2px); }
-  95% { transform: translateX(-1px); }
+  5% { transform: translateX(-4px); }
+  10% { transform: translateX(4px); }
+  15% { transform: translateX(-4px); }
+  20% { transform: translateX(4px); }
+  25% { transform: translateX(-3px); }
+  30% { transform: translateX(3px); }
+  35% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  45% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  55% { transform: translateX(-2px); }
+  60% { transform: translateX(2px); }
+  65% { transform: translateX(-1px); }
+  70% { transform: translateX(1px); }
+  75% { transform: translateX(-1px); }
+  80% { transform: translateX(1px); }
   100% { transform: translateX(0); }
-}
-
-@keyframes brutal-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
 }
 
 .brutal-input-container {
@@ -231,17 +258,28 @@
 
 .brutal-input {
   width: 100%;
-  height: 60px;
-  padding: 12px 18px;
-  font-size: 17px;
+  height: 50px;
+  padding: 10px 14px;
+  font-size: 14px;
   font-family: "Courier New", Courier, monospace, ui-monospace;
   color: #000000;
   background-color: #ffffff;
-  border: 4px solid #000000;
+  border: 3px solid #000000;
   border-radius: 0;
   outline: none;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 8px 8px 0px #000000;
+  box-shadow: 4px 4px 0px #000000;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .brutal-input {
+    height: 60px;
+    padding: 12px 18px;
+    font-size: 16px;
+    border: 4px solid #000000;
+    box-shadow: 8px 8px 0px #000000;
+  }
 }
 
 .brutal-input::placeholder {
@@ -250,16 +288,29 @@
 }
 
 .brutal-input:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 12px 12px 0px #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+@media (min-width: 640px) {
+  .brutal-input:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px #000000;
+  }
 }
 
 .brutal-input:focus {
   background-color: #010101;
   color: #ffffff;
   border-color: #ffffff;
-  box-shadow: 10px 10px 0px #ffe600;
+  box-shadow: 6px 6px 0px #ffe600;
   animation: brutal-shake 0.55s ease-in-out;
+}
+
+@media (min-width: 640px) {
+  .brutal-input:focus {
+    box-shadow: 10px 10px 0px #ffe600;
+  }
 }
 
 .brutal-input:focus::placeholder {
@@ -272,36 +323,61 @@
 }
 
 .brutal-btn {
-  height: 60px;
-  padding: 0 28px;
-  font-size: 16px;
+  height: 50px;
+  padding: 0 20px;
+  font-size: 14px;
   font-weight: 800;
   font-family: "Courier New", Courier, monospace, ui-monospace;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   color: #000000;
   background-color: #ffe600;
-  border: 4px solid #000000;
+  border: 3px solid #000000;
   border-radius: 0;
   cursor: pointer;
-  box-shadow: 8px 8px 0px #000000;
+  box-shadow: 4px 4px 0px #000000;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .brutal-btn {
+    height: 60px;
+    padding: 0 28px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    border: 4px solid #000000;
+    box-shadow: 8px 8px 0px #000000;
+  }
 }
 
 .brutal-btn:hover:not(:disabled) {
-  transform: translate(-4px, -4px);
-  box-shadow: 12px 12px 0px #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000;
   background-color: #ffb6c1;
+}
+
+@media (min-width: 640px) {
+  .brutal-btn:hover:not(:disabled) {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px #000000;
+  }
 }
 
 .brutal-btn:active:not(:disabled) {
   transform: translate(2px, 2px);
-  box-shadow: 4px 4px 0px #000000;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+@media (min-width: 640px) {
+  .brutal-btn:active:not(:disabled) {
+    box-shadow: 4px 4px 0px #000000;
+  }
 }
 
 .brutal-btn:disabled {

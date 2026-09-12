@@ -17,7 +17,7 @@ export function CommitAnalytics({
   if (!commits || commits.length === 0) {
     return (
       <DashboardSection title="Commit Activity" description="Commit frequency over time">
-        <div className="flex h-48 items-center justify-center rounded-md border border-dashed text-sm text-muted-foreground bg-muted/20">
+        <div className="flex h-44 sm:h-48 items-center justify-center rounded-xl border border-dashed text-xs sm:text-sm text-muted-foreground bg-muted/20">
           No commits available
         </div>
       </DashboardSection>
@@ -49,30 +49,30 @@ export function CommitAnalytics({
             variant="ghost"
             size="sm"
             onClick={onViewAll}
-            className="text-xs gap-1 h-8 px-2.5 font-mono text-primary hover:bg-primary/10"
+            className="text-[11px] sm:text-xs gap-1 h-7 sm:h-8 px-2 sm:px-2.5 font-mono text-primary hover:bg-primary/10"
           >
-            <GitCommit className="h-3.5 w-3.5" />
-            <span>View all {commits.length} commits</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <GitCommit className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+            <span>View {commits.length} commits</span>
+            <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
           </Button>
         )
       }
     >
-      <div className="h-64 mt-4 w-full">
+      <div className="h-56 sm:h-64 mt-2 sm:mt-4 w-full">
         {data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+            <LineChart data={data} margin={{ top: 5, right: 10, left: -25, bottom: 0 }}>
               <XAxis 
                 dataKey="date" 
                 axisLine={false} 
                 tickLine={false} 
-                tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} 
-                minTickGap={30}
+                tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} 
+                minTickGap={25}
               />
               <YAxis 
                 axisLine={false} 
                 tickLine={false} 
-                tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} 
+                tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} 
               />
               <Tooltip 
                 contentStyle={{ 
@@ -93,7 +93,7 @@ export function CommitAnalytics({
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+          <div className="flex h-full items-center justify-center text-xs sm:text-sm text-muted-foreground">
             No valid commit dates found
           </div>
         )}

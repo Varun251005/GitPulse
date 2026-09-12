@@ -22,7 +22,7 @@ export function PullRequestAnalytics({
   if (!pullRequests || pullRequests.length === 0) {
     return (
       <DashboardSection title="Pull Requests" description="Pull request merge trends">
-        <div className="flex h-48 items-center justify-center rounded-md border border-dashed text-sm text-muted-foreground bg-muted/20">
+        <div className="flex h-44 sm:h-48 items-center justify-center rounded-xl border border-dashed text-xs sm:text-sm text-muted-foreground bg-muted/20">
           No pull requests found
         </div>
       </DashboardSection>
@@ -59,16 +59,16 @@ export function PullRequestAnalytics({
             variant="ghost"
             size="sm"
             onClick={onViewAll}
-            className="text-xs gap-1 h-8 px-2.5 font-mono text-primary hover:bg-primary/10"
+            className="text-[11px] sm:text-xs gap-1 h-7 sm:h-8 px-2 sm:px-2.5 font-mono text-primary hover:bg-primary/10"
           >
-            <PRIcon className="h-3.5 w-3.5" />
-            <span>View all {pullRequests.length} PRs</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <PRIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+            <span>View {pullRequests.length} PRs</span>
+            <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
           </Button>
         )
       }
     >
-      <div className="h-64 mt-4 w-full">
+      <div className="h-56 sm:h-64 mt-2 sm:mt-4 w-full">
         {data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
@@ -76,8 +76,8 @@ export function PullRequestAnalytics({
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={80}
+                innerRadius={50}
+                outerRadius={70}
                 paddingAngle={2}
                 dataKey="value"
               >
@@ -100,11 +100,11 @@ export function PullRequestAnalytics({
                 labelStyle={{ color: "#ffffff", fontWeight: 700, marginBottom: "4px" }}
                 formatter={(value) => [`${value} PRs`, "Count"]}
               />
-              <Legend verticalAlign="bottom" height={36} iconType="circle" />
+              <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: "11px" }} />
             </PieChart>
           </ResponsiveContainer>
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+          <div className="flex h-full items-center justify-center text-xs sm:text-sm text-muted-foreground">
             No PR state data available
           </div>
         )}

@@ -53,7 +53,7 @@ export function SummaryCards({
   ]
 
   return (
-    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 font-mono">
+    <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 font-mono">
       {cards.map((card) => {
         const Icon = card.icon
         const isCurrentActive = activeTab === card.id
@@ -62,28 +62,25 @@ export function SummaryCards({
           <Card
             key={card.id}
             onClick={() => onSelectTab && onSelectTab(card.id)}
-            className={`group transition-all duration-200 cursor-pointer ${card.bgHover} ${
+            className={`group transition-all duration-200 cursor-pointer rounded-xl sm:rounded-2xl ${card.bgHover} ${
               isCurrentActive
                 ? "ring-2 ring-primary border-primary bg-neutral-900"
                 : "border-neutral-800 bg-neutral-950/80"
             }`}
           >
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-neutral-300 flex items-center gap-1.5">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 p-3 sm:p-5 pb-1 sm:pb-2">
+              <CardTitle className="text-xs sm:text-sm font-medium text-neutral-300 flex items-center gap-1">
                 <span>{card.title}</span>
-                <ArrowUpRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                <ArrowUpRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
               </CardTitle>
-              <Icon className={`h-4 w-4 ${card.color} transition-colors`} />
+              <Icon className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${card.color} transition-colors shrink-0`} />
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-white tracking-tight">
+            <CardContent className="p-3 sm:p-5 pt-0 sm:pt-0">
+              <div className="text-lg sm:text-2xl font-bold text-white tracking-tight">
                 {card.count.toLocaleString()}
               </div>
-              <p className="text-xs text-neutral-400 mt-1 flex items-center justify-between">
-                <span>{card.label}</span>
-                <span className="text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                  View details →
-                </span>
+              <p className="text-[10px] sm:text-xs text-neutral-400 mt-0.5 sm:mt-1 flex items-center justify-between">
+                <span className="truncate">{card.label}</span>
               </p>
             </CardContent>
           </Card>
