@@ -73,10 +73,8 @@ export function CommitAnalytics({
                 axisLine={false} 
                 tickLine={false} 
                 tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} 
-                allowDecimals={false}
               />
               <Tooltip 
-                contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--border))" }}
                 contentStyle={{ 
                   backgroundColor: "#09090b", 
                   borderColor: "#27272a", 
