@@ -53,20 +53,14 @@ function formatRelativeTime(dateStr: string): string {
     const now = new Date()
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
 
-    if (diffInSeconds < 60) return "just now"
     if (diffInSeconds < 60) return "now"
     const diffInMinutes = Math.floor(diffInSeconds / 60)
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`
     if (diffInMinutes < 60) return `${diffInMinutes}m`
     const diffInHours = Math.floor(diffInMinutes / 60)
-    if (diffInHours < 24) return `${diffInHours}h ago`
     if (diffInHours < 24) return `${diffInHours}h`
-    const diffInDays = Math.floor(diffInHours / 24)
-    if (diffInDays < 30) return `${diffInDays}d ago`
+    const diffInDays = Math.floor(diffInDays / 24)
     if (diffInDays < 30) return `${diffInDays}d`
     const diffInMonths = Math.floor(diffInDays / 30)
-    if (diffInMonths < 12) return `${diffInMonths}mo ago`
-    return `${Math.floor(diffInMonths / 12)}y ago`
     if (diffInMonths < 12) return `${diffInMonths}mo`
     return `${Math.floor(diffInMonths / 12)}y`
   } catch {
@@ -95,39 +89,16 @@ export function RepositoryCard({ repo }: { repo: UserRepoItem }) {
   return (
     <Card
       onClick={handleCardClick}
-      className="group relative cursor-pointer overflow-hidden border-border/70 hover:border-primary/50 hover:shadow-md transition-all duration-200 bg-card/60 hover:bg-card flex flex-col justify-between"
       className="group relative cursor-pointer overflow-hidden border-border/70 hover:border-primary/50 hover:shadow-md transition-all duration-200 bg-card/60 hover:bg-card flex flex-col justify-between rounded-lg sm:rounded-xl"
     >
-      <CardContent className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
       <CardContent className="p-2.5 sm:p-4 space-y-2 sm:space-y-3 flex-1 flex flex-col justify-between">
         {/* Top: Name, Badge, GitHub link */}
-        <div className="space-y-2">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap min-w-0">
-              <h3 className="font-semibold text-sm sm:text-base tracking-tight truncate group-hover:text-primary transition-colors max-w-[170px] xs:max-w-[200px] sm:max-w-none">
         <div className="space-y-1 sm:space-y-1.5">
           <div className="flex items-start justify-between gap-1">
             <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap min-w-0 flex-1">
               <h3 className="font-bold text-xs sm:text-sm md:text-base tracking-tight truncate group-hover:text-primary transition-colors w-full" title={repo.name}>
                 {repo.name}
               </h3>
-              {repo.isPrivate ? (
-                <Badge
-                  variant="outline"
-                  className="gap-1 border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/10 font-medium text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 shrink-0"
-                >
-                  <Lock className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-                  Private
-                </Badge>
-              ) : (
-                <Badge
-                  variant="secondary"
-                  className="gap-1 font-medium text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 shrink-0"
-                >
-                  <Globe className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-muted-foreground" />
-                  Public
-                </Badge>
-              )}
               <div className="flex items-center gap-1">
                 {repo.isPrivate ? (
                   <Badge
@@ -149,8 +120,6 @@ export function RepositoryCard({ repo }: { repo: UserRepoItem }) {
               </div>
             </div>
 
-            <div className="flex items-center gap-1 shrink-0">
-              {isNavigating && <Loader2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin text-primary" />}
             <div className="flex items-center gap-0.5 shrink-0">
               {isNavigating && <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin text-primary" />}
               <a
@@ -158,54 +127,38 @@ export function RepositoryCard({ repo }: { repo: UserRepoItem }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="p-1 text-muted-foreground hover:text-foreground transition-colors rounded hover:bg-muted"
                 className="p-0.5 sm:p-1 text-muted-foreground hover:text-foreground transition-colors rounded hover:bg-muted hidden sm:inline-flex"
                 aria-label={`View ${repo.fullName} on GitHub`}
               >
-                <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4 opacity-60 group-hover:opacity-100" />
                 <ExternalLink className="h-3 w-3 sm:h-3.5 sm:w-3.5 opacity-60 group-hover:opacity-100" />
               </a>
             </div>
           </div>
 
-          <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed min-h-[1.75rem] font-sans">
-            {repo.description || "No description provided."}
           <p className="text-[10px] sm:text-xs text-muted-foreground line-clamp-1 sm:line-clamp-2 leading-tight font-sans">
             {repo.description || "No description."}
           </p>
         </div>
 
         {/* Bottom: Language, Stars, Forks, Updated Time */}
-        <div className="flex items-center justify-between pt-2.5 sm:pt-3 border-t border-border/50 text-[11px] sm:text-xs text-muted-foreground flex-wrap gap-y-1">
-          <div className="flex items-center gap-2.5 sm:gap-3">
         <div className="flex items-center justify-between pt-1.5 sm:pt-2 border-t border-border/50 text-[9px] sm:text-[11px] text-muted-foreground flex-wrap gap-y-0.5">
           <div className="flex items-center gap-1.5 sm:gap-2.5">
             {repo.language && (
-              <span className="flex items-center gap-1 font-medium text-foreground/80">
-                <span className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${getLanguageColor(repo.language)} inline-block`} />
-                {repo.language}
               <span className="flex items-center gap-0.5 sm:gap-1 font-medium text-foreground/80">
                 <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${getLanguageColor(repo.language)} inline-block shrink-0`} />
                 <span className="truncate max-w-[42px] sm:max-w-none">{repo.language}</span>
               </span>
             )}
-            <span className="flex items-center gap-1" title={`${repo.starsCount} stars`}>
-              <Star className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-              {repo.starsCount.toLocaleString()}
             <span className="flex items-center gap-0.5" title={`${repo.starsCount} stars`}>
               <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
               {repo.starsCount}
             </span>
-            <span className="flex items-center gap-1" title={`${repo.forksCount} forks`}>
-              <GitFork className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-              {repo.forksCount.toLocaleString()}
             <span className="flex items-center gap-0.5" title={`${repo.forksCount} forks`}>
               <GitFork className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
               {repo.forksCount}
             </span>
           </div>
 
-          <span className="text-[10px] sm:text-[11px]">
           <span className="text-[8px] sm:text-[10px] text-neutral-500">
             {formatRelativeTime(repo.updatedAt)}
           </span>
@@ -214,4 +167,3 @@ export function RepositoryCard({ repo }: { repo: UserRepoItem }) {
     </Card>
   )
 }
-
