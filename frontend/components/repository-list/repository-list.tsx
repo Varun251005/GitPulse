@@ -276,13 +276,21 @@ export function RepositoryList() {
 
       {/* Loading Skeleton Grid */}
       {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
         <div className="grid grid-cols-3 gap-2 sm:gap-4">
           {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="border rounded-xl p-4 sm:p-5 h-36 sm:h-40 bg-card space-y-3 sm:space-y-4">
             <div key={i} className="border rounded-lg sm:rounded-xl p-2.5 sm:p-4 h-28 sm:h-36 bg-card space-y-2 sm:space-y-3">
               <div className="flex justify-between items-center">
+                <Skeleton className="h-5 w-32 sm:w-36" />
+                <Skeleton className="h-5 w-14 sm:w-16" />
                 <Skeleton className="h-4 sm:h-5 w-16 sm:w-28" />
                 <Skeleton className="h-3 sm:h-4 w-8 sm:w-12" />
               </div>
+              <Skeleton className="h-6 sm:h-8 w-full" />
+              <div className="flex justify-between pt-2">
+                <Skeleton className="h-3.5 w-16 sm:w-20" />
+                <Skeleton className="h-3.5 w-20 sm:w-24" />
               <Skeleton className="h-4 sm:h-6 w-full" />
               <div className="flex justify-between pt-1">
                 <Skeleton className="h-3 w-10 sm:w-14" />
@@ -292,6 +300,7 @@ export function RepositoryList() {
           ))}
         </div>
       ) : filteredRepos.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
         <div className="grid grid-cols-3 gap-2 sm:gap-4">
           {filteredRepos.map((repo) => (
             <RepositoryCard key={repo.id} repo={repo} />
