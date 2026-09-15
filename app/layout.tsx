@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 
 import { Header } from "@/frontend/components/layout/header";
 import { SessionProvider } from "@/frontend/components/providers/session-provider";
-import { UserProvider } from "@/frontend/lib/user-context";
 
 export default function RootLayout({
   children,
@@ -28,10 +27,8 @@ export default function RootLayout({
         className={`${geistMono.variable} font-mono antialiased min-h-screen flex flex-col bg-background text-foreground`}
       >
         <SessionProvider>
-          <UserProvider>
-            <Header />
-            <main className="flex-1 flex flex-col">{children}</main>
-          </UserProvider>
+          <Header />
+          <main className="flex-1 flex flex-col">{children}</main>
         </SessionProvider>
       </body>
     </html>
