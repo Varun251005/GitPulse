@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 import { Header } from "@/frontend/components/layout/header";
 import { SessionProvider } from "@/frontend/components/providers/session-provider";
+import { UserProvider } from "@/frontend/lib/user-context";
 
 export default function RootLayout({
   children,
@@ -29,6 +30,10 @@ export default function RootLayout({
         <SessionProvider>
           <Header />
           <main className="flex-1 flex flex-col">{children}</main>
+          <UserProvider>
+            <Header />
+            <main className="flex-1 flex flex-col">{children}</main>
+          </UserProvider>
         </SessionProvider>
       </body>
     </html>
