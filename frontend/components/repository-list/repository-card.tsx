@@ -58,7 +58,7 @@ function formatRelativeTime(dateStr: string): string {
     if (diffInMinutes < 60) return `${diffInMinutes}m`
     const diffInHours = Math.floor(diffInMinutes / 60)
     if (diffInHours < 24) return `${diffInHours}h`
-    const diffInDays = Math.floor(diffInDays / 24)
+    const diffInDays = Math.floor(diffInHours / 24)
     if (diffInDays < 30) return `${diffInDays}d`
     const diffInMonths = Math.floor(diffInDays / 30)
     if (diffInMonths < 12) return `${diffInMonths}mo`
