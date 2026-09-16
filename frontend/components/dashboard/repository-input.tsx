@@ -6,7 +6,6 @@ import { Button } from "@/frontend/components/ui/button"
 import { Search, Loader2 } from "lucide-react"
 import { GithubIcon } from "@/frontend/components/icons/github-icon"
 import { parseGitHubRepoUrl } from "@/backend/github/url"
-import { signIn } from "next-auth/react"
 
 export function RepositoryInput() {
   const [url, setUrl] = useState("")
@@ -139,7 +138,7 @@ export function RepositoryInput() {
               type="button"
               size="sm"
               variant="default"
-              onClick={() => signIn("github")}
+              onClick={() => router.push("/login")}
               className="gap-1.5 shrink-0 self-start sm:self-center font-mono font-bold text-xs"
             >
               <GithubIcon className="h-3.5 w-3.5" />
