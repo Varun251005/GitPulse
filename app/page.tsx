@@ -6,7 +6,7 @@ import { Button } from "@/frontend/components/ui/button"
 import { Card, CardContent } from "@/frontend/components/ui/card"
 import { Users, GitPullRequest, CircleDot, ArrowRight, FolderGit2 } from "lucide-react"
 import { GithubIcon } from "@/frontend/components/icons/github-icon"
-import { useSession, signIn } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 
 export default function Home() {
@@ -44,16 +44,14 @@ export default function Home() {
             </div>
           ) : (
             <div className="space-y-2">
-              <Button
-                onClick={() => signIn("github", { callbackUrl: "/repos" })}
-                size="lg"
-                className="w-full h-12 text-base font-semibold gap-2.5 shadow-sm"
-              >
-                <GithubIcon className="h-5 w-5" />
-                Sign in with GitHub
+              <Button asChild size="lg" className="w-full h-12 text-base font-semibold gap-2.5 shadow-sm brutal-btn">
+                <Link href="/login">
+                  <GithubIcon className="h-5 w-5 fill-current" />
+                  Sign in with GitHub
+                </Link>
               </Button>
               <p className="text-xs text-muted-foreground">
-                Access your repositories (public and private)
+                Access your public repositories
               </p>
             </div>
           )}
