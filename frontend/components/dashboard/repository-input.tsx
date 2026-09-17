@@ -84,6 +84,12 @@ export function RepositoryInput() {
       // Ingestion queued — navigate to the dashboard which will poll until ready
       setStatus("Analysis queued! Loading dashboard…")
       router.push(`/repos/${encodeURIComponent(parsed.owner)}/${encodeURIComponent(parsed.repo)}`)
+      
+      // Reset loading state after a short delay so the button doesn't stay stuck if they navigate back
+      setTimeout(() => {
+        setIsLoading(false)
+        setStatus("")
+      }, 500)
     } catch {
       setError("Network error. Please check your connection and try again.")
       setIsLoading(false)
