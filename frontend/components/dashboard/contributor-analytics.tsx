@@ -4,6 +4,7 @@ import { DashboardSection } from "./dashboard-section"
 import { GitPulseCommit, GitPulseContributor } from "@/types/api"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
 import { ArrowRight, User } from "lucide-react"
+import { User } from "lucide-react"
 
 export function ContributorAnalytics({ 
   contributors, 
