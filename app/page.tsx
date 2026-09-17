@@ -6,11 +6,11 @@ import { Button } from "@/frontend/components/ui/button"
 import { Card, CardContent } from "@/frontend/components/ui/card"
 import { Users, GitPullRequest, CircleDot, ArrowRight, FolderGit2 } from "lucide-react"
 import { GithubIcon } from "@/frontend/components/icons/github-icon"
-import { useSession } from "next-auth/react"
+import { useUserProfile } from "@/frontend/lib/user-context"
 import Link from "next/link"
 
 export default function Home() {
-  const { data: session, status } = useSession()
+  const { user, isLoading } = useUserProfile()
 
   return (
     <DashboardShell>
@@ -27,9 +27,9 @@ export default function Home() {
 
         {/* Primary Action / Auth CTA */}
         <div className="w-full max-w-md space-y-2">
-          {status === "loading" ? (
+          {isLoading ? (
             <div className="h-12 w-full bg-muted animate-pulse rounded-lg" />
-          ) : session ? (
+          ) : user ? (
             <div className="space-y-2">
               <Button asChild size="lg" className="w-full h-12 text-base font-semibold gap-2 shadow-sm">
                 <Link href="/repos">
@@ -39,7 +39,7 @@ export default function Home() {
                 </Link>
               </Button>
               <p className="text-xs text-muted-foreground">
-                Signed in as <span className="font-medium text-foreground">{session.user?.name || session.user?.email}</span>
+                Signed in as <span className="font-medium text-foreground">{user.displayName || user.username}</span>
               </p>
             </div>
           ) : (
