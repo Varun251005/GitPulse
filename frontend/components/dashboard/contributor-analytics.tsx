@@ -50,6 +50,7 @@ export function ContributorAnalytics({
               layout="vertical" 
               margin={{ top: 0, right: 10, left: 0, bottom: 0 }}
               onClick={(state) => {
+              onClick={(state: any) => {
                 if (state && state.activePayload && state.activePayload.length > 0) {
                   const author = state.activePayload[0].payload.name
                   if (author && author !== "Unknown" && onSelectContributor) {
