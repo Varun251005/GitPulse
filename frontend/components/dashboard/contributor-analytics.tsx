@@ -3,12 +3,10 @@
 import { DashboardSection } from "./dashboard-section"
 import { GitPulseCommit, GitPulseContributor } from "@/types/api"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
-import { ArrowRight, User } from "lucide-react"
 import { User } from "lucide-react"
 
 export function ContributorAnalytics({ 
   contributors, 
-  commits 
   commits,
   onSelectContributor,
 }: { 
@@ -40,7 +38,6 @@ export function ContributorAnalytics({
     .map(([name, count]) => ({ name, count }))
 
   return (
-    <DashboardSection title="Contributors" description="Top contributors in recent commits">
     <DashboardSection 
       title="Contributors" 
       description="Top contributors in recent commits (click a contributor to view their commits)"
@@ -48,7 +45,6 @@ export function ContributorAnalytics({
       <div className="h-64 mt-4 w-full">
         {data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data} layout="vertical" margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
             <BarChart 
               data={data} 
               layout="vertical" 
@@ -69,14 +65,12 @@ export function ContributorAnalytics({
                 axisLine={false} 
                 tickLine={false} 
                 width={100}
-                tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
                 tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))", cursor: "pointer" }}
               />
               <Tooltip 
                 cursor={{ fill: "hsl(var(--muted)/0.5)" }}
                 contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--border))" }}
               />
-              <Bar dataKey="count" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} barSize={24} />
               <Bar 
                 dataKey="count" 
                 fill="hsl(var(--primary))" 
@@ -112,4 +106,3 @@ export function ContributorAnalytics({
     </DashboardSection>
   )
 }
-
