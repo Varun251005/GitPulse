@@ -28,8 +28,6 @@ export default function RootLayout({
         className={`${geistMono.variable} font-mono antialiased min-h-screen flex flex-col bg-background text-foreground`}
       >
         <SessionProvider>
-          <Header />
-          <main className="flex-1 flex flex-col">{children}</main>
           <UserProvider>
             <Header />
             <main className="flex-1 flex flex-col">{children}</main>
